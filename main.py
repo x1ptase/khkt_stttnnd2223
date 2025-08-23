@@ -92,6 +92,7 @@ def norm_train2d(p):
     return p
 
 
+# display
 window = Tk()
 window.title("Vietnamese Sign Language Interpreter")
 window.geometry("1020x600")

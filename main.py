@@ -17,7 +17,6 @@ from tqdm import tqdm
 
 import build_ddnet as ddnet  # build train model
 
-
 def data_generator_rt(T, C):
     X_0 = []
     X_1 = []

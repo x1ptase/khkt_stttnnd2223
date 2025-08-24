@@ -1,9 +1,9 @@
 import numpy as np
-import random
 from tqdm import tqdm
 import scipy.ndimage.interpolation as inter
 from scipy.signal import medfilt
 from scipy.spatial.distance import cdist
+import random
 
 from keras.optimizers import *
 from keras.models import Model

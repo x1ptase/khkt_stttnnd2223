@@ -239,15 +239,13 @@ def GT1():
                     default_speaker.play(samples6, samplerate=samplerate6)  # tỉ lệ mẫu9
 
                 sentence.append(labels[np.argmax(res)])
-
                 sequence.clear()
-
                 print(sentence)
 
-            # Show fps
-            time1 = time.time()
-            fps = 1 / (time1 - time0)
-            time0 = time1
+            # SHOW FPS
+            time1=time.time()
+            fps=1/(time1-time0)
+            time0=time1
 
             cv2.putText(image, 'FPS:' + str(int(fps)), (3, 475), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2,
                         cv2.LINE_AA)

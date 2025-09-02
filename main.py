@@ -217,24 +217,25 @@ def GT1():
                 # print(labels[np.argmax(res)])
                 # print(np.argmax[res])
 
+                #  MEDIA
                 if np.argmax(res) == 0:
-                    samples1, samplerate1 = sf.read("/Users/pta911/Workspace/Vietnamese-Sign-Language/media-file/output1.wav")
+                    samples1, samplerate1 = sf.read("D:\GIT\khkt_stttnnd2223\media\output1.wav")
                     default_speaker.play(samples1, samplerate=samplerate1)  # tỉ lệ mẫu1
 
                 if np.argmax(res) == 2:
-                    samples2, samplerate2 = sf.read("/Users/pta911/Workspace/Vietnamese-Sign-Language/media-file/output2.wav")
+                    samples2, samplerate2 = sf.read("D:\GIT\khkt_stttnnd2223\media\output2.wav")
                     default_speaker.play(samples2, samplerate=samplerate2)  # tỉ lệ mẫu2
 
                 if np.argmax(res) == 4:
-                    samples4, samplerate4 = sf.read("/Users/pta911/Workspace/Vietnamese-Sign-Language/media-file/output4.wav")
+                    samples4, samplerate4 = sf.read("D:\GIT\khkt_stttnnd2223\media\output4.wav")
                     default_speaker.play(samples4, samplerate=samplerate4)  # tỉ lệ mẫu4
 
                 if np.argmax(res) == 5:
-                    samples5, samplerate5 = sf.read('/Users/pta911/prince_xx01/Vietnamese-Sign-Language/media-file/output5.wav')
+                    samples5, samplerate5 = sf.read("D:\GIT\khkt_stttnnd2223\media\output5.wav")
                     default_speaker.play(samples5, samplerate=samplerate5)  # tỉ lệ mẫu5
 
                 if np.argmax(res) == 9:
-                    samples6, samplerate6 = sf.read('/Users/pta911/prince_xx01/Vietnamese-Sign-Language/media-file/output6.wav')
+                    samples6, samplerate6 = sf.read("D:\GIT\khkt_stttnnd2223\media\output6.wav")
                     default_speaker.play(samples6, samplerate=samplerate6)  # tỉ lệ mẫu9
 
                 sentence.append(labels[np.argmax(res)])

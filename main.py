@@ -51,29 +51,29 @@ def zoom(p, target_l=32, joints_num=20, joints_dim=3):
 
 
 def sampling_frame(p, C):
-    full_l = p.shape[0]  # full length
+    full_l=p.shape[0]  # full length
     if random.uniform(0, 1) < 0.5:  # aligment sampling
-        valid_l = np.round(np.random.uniform(0.9, 1) * full_l)
-        s = random.randint(0, full_l - int(valid_l))
-        e = s + valid_l  # sample end point
-        p = p[int(s):int(e), :, :]
+        valid_l=np.round(np.random.uniform(0.9, 1) * full_l)
+        s=random.randint(0, full_l - int(valid_l))
+        e=s + valid_l  # sample end point
+        p=p[int(s) : int(e), :, :]
     else:  # without aligment sampling
-        valid_l = np.round(np.random.uniform(0.9, 1) * full_l)
-        index = np.sort(np.random.choice(range(0, full_l), int(valid_l), replace=False))
-        p = p[index, :, :]
-    p = zoom(p, C.frame_l, C.joint_n, C.joint_d)
+        valid_l=np.round(np.random.uniform(0.9, 1) * full_l)
+        index=np.sort(np.random.choice(range(0, full_l), int(valid_l), replace=False))
+        p=p[index, :, :]
+    p=zoom(p, C.frame_l, C.joint_n, C.joint_d)
     return p
 
 
 def get_CG(p, C):
-    M = []
-    iu = np.triu_indices(C.joint_n, 1, C.joint_n)
+    M=[]
+    iu=np.triu_indices(C.joint_n, 1, C.joint_n)
     for f in range(C.frame_l):
         # distance max
-        d_m = cdist(p[f], np.concatenate([p[f], np.zeros([1, C.joint_d])]), 'euclidean')
-        d_m = d_m[iu]
+        d_m=cdist(p[f], np.concatenate([p[f], np.zeros([1, C.joint_d])]), 'euclidean')
+        d_m=d_m[iu]
         M.append(d_m)
-    M = np.stack(M)
+    M=np.stack(M)
     return M
 
 

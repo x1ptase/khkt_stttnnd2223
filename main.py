@@ -150,32 +150,32 @@ label_text7.place(x=0, y=420)
 
 
 def GT1():
-    # Build DD-Net model
-    C = ddnet.Config()
-    DD_Net = ddnet.build_DD_Net(C)
+    # BUILD DD-NET MODEL
+    C=ddnet.Config()
+    DD_Net=ddnet.build_DD_Net(C)
     DD_Net.summary()
     DD_Net.load_weights('pta-lkn.h5')
 
-    # 10 classes
-    labels = ['xin chao rat vui duoc gap ban', '', 'xin cam on ban that tot bung', '', 'xin chao rat vui duoc gap ban',
+    # 10 CLASSES - 5 REAL [1, 3, 5, 6, 10] 
+    labels=['xin chao rat vui duoc gap ban', '', 'xin cam on ban that tot bung', '', 'xin chao rat vui duoc gap ban',
               'toi la nguoi diec', '', '', '', 'toi la nguoi diec']
 
-    colors = [(245, 117, 16), (117, 245, 16), (16, 117, 245)]
+    colors=[(245, 117, 16), (117, 245, 16), (16, 117, 245)]
 
     # define mediapipe solutions
-    mp_drawing = mp.solutions.drawing_utils
-    mp_drawing_styles = mp.solutions.drawing_styles
-    mp_pose = mp.solutions.pose
+    mp_drawing=mp.solutions.drawing_utils
+    mp_drawing_styles=mp.solutions.drawing_styles
+    mp_pose=mp.solutions.pose
 
-    time0 = 0
-    sequence = []
-    sentence = ['']
-    predictions = []
-    threshold = 0.6
+    time0=0
+    sequence=[]
+    sentence=['']
+    predictions=[]
+    threshold=0.6
 
-    default_speaker = sc.default_speaker()
-
-    # access webcam with opencv
+    default_speaker=sc.default_speaker()
+    
+    # ACCESS WEBCAM OPENCV
     cap = cv2.VideoCapture(0)
 
     with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:

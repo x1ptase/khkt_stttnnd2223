@@ -41,12 +41,12 @@ def data_generator_rt(T, C):
 
 # Calculate features
 def zoom(p, target_l=32, joints_num=20, joints_dim=3):
-    l = p.shape[0]
-    p_new = np.empty([target_l, joints_num, joints_dim])
+    l=p.shape[0]
+    p_new=np.empty([target_l, joints_num, joints_dim])
     for m in range(joints_num):
         for n in range(joints_dim):
-            p[:, m, n] = medfilt(p[:, m, n], 3)
-            p_new[:, m, n] = inter.zoom(p[:, m, n], target_l / l)[:target_l]
+            p[:, m, n]=medfilt(p[:, m, n], 3)
+            p_new[:, m, n]=inter.zoom(p[:, m, n], target_l / l)[:target_l]
     return p_new
 
 
@@ -79,15 +79,15 @@ def get_CG(p, C):
 
 def norm_train(p):
     # normalize to start point use the center for hand case
-    p[:, :, 0] = p[:, :, 0] - np.mean(p[:, :, 0])
-    p[:, :, 1] = p[:, :, 1] - np.mean(p[:, :, 1])
-    p[:, :, 2] = p[:, :, 2] - np.mean(p[:, :, 2])
+    p[:, :, 0]=p[:, :, 0] - np.mean(p[:, :, 0])
+    p[:, :, 1]=p[:, :, 1] - np.mean(p[:, :, 1])
+    p[:, :, 2]=p[:, :, 2] - np.mean(p[:, :, 2])
     return p
 
 
 def norm_train2d(p):
-    p[:, :, 0] = p[:, :, 0] - np.mean(p[:, :, 0])
-    p[:, :, 1] = p[:, :, 1] - np.mean(p[:, :, 1])
+    p[:, :, 0]=p[:, :, 0] - np.mean(p[:, :, 0])
+    p[:, :, 1]=p[:, :, 1] - np.mean(p[:, :, 1])
     return p
 
 
@@ -96,54 +96,54 @@ window = Tk()
 window.title("Vietnamese Sign Language Interpreter")
 window.geometry("1020x600")
 # window.attributes("-topmost", True)
-window['bg'] = '#e0ffff'
+window['bg']='#e0ffff'
 
-label_text = Label(window,
+label_text=Label(window,
                    text="  Phiên dịch ngôn ngữ kí hiệu                                                                ",
                    bg="#708090",
                    fg="#fffafa",
                    font=("Time New Roman", 30))
 label_text.place(x=0, y=0)
 
-label_text1 = Label(window,
+label_text1=Label(window,
                     text="                                                                                            ",
                     bg="#4682b4",
                     font=("Time New Roman", 70))
 label_text1.place(x=0, y=48)
 
-label_text2 = Label(window,
+label_text2=Label(window,
                     text="                                                                                            ",
                     bg="#d3d3d3",
                     font=("Time New Roman", 40))
 label_text2.place(x=0, y=158)
 
-label_text2 = Label(window,
+label_text2=Label(window,
                     text="                                                                                            ",
                     bg="#4682b4",
                     font=("Time New Roman", 100))
 label_text2.place(x=200, y=280)
 
-label_text3 = Label(window, text="    ",
+label_text3=Label(window, text="    ",
                     bg="#4682b4",
                     font=("Time New Roman", 18))
 label_text3.place(x=0, y=260)
 
-label_text4 = Label(window, text="    ",
+label_text4=Label(window, text="    ",
                     bg="#4682b4",
                     font=("Time New Roman", 18))
 label_text4.place(x=0, y=300)
 
-label_text5 = Label(window, text="    ",
+label_text5=Label(window, text="    ",
                     bg="#4682b4",
                     font=("Time New Roman", 18))
 label_text5.place(x=0, y=340)
 
-label_text6 = Label(window, text="    ",
+label_text6=Label(window, text="    ",
                     bg="#4682b4",
                     font=("Time New Roman", 18))
 label_text6.place(x=0, y=380)
 
-label_text7 = Label(window, text="    ",
+label_text7=Label(window, text="    ",
                     bg="#4682b4",
                     font=("Time New Roman", 18))
 label_text7.place(x=0, y=420)

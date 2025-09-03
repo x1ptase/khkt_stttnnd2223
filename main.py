@@ -18,23 +18,23 @@ from tqdm import tqdm
 import build_ddnet as ddnet  # build train model
 
 def data_generator_rt(T, C):
-    X_0 = []
-    X_1 = []
+    X_0=[]
+    X_1=[]
 
-    T = np.expand_dims(T, axis=0)
+    T=np.expand_dims(T, axis=0)
     for i in tqdm(range(len(T))):
-        p = np.copy(T[i])
-        p = zoom(p, target_l=C.frame_l, joints_num=C.joint_n, joints_dim=C.joint_d)
+        p=np.copy(T[i])
+        p=zoom(p, target_l=C.frame_l, joints_num=C.joint_n, joints_dim=C.joint_d)
 
-        M = get_CG(p, C)
+        M=get_CG(p, C)
 
         X_0.append(M)
-        p = norm_train2d(p)
+        p=norm_train2d(p)
 
         X_1.append(p)
 
-    X_0 = np.stack(X_0)
-    X_1 = np.stack(X_1)
+    X_0=np.stack(X_0)
+    X_1=np.stack(X_1)
 
     return X_0, X_1
 

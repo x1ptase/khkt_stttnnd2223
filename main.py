@@ -282,10 +282,10 @@ def GT2():
     return
 
 
-btnCon1 = Button(window, text='Giao thức 1', bg="#696969", fg="#e6e6fa", font=("Time New Roman", 18), command=GT1)
+btnCon1=Button(window, text='Giao thức 1', bg="#696969", fg="#e6e6fa", font=("Time New Roman", 18), command=GT1)
 btnCon1.place(x=10, y=168)
 
-btnCon2 = Button(window, text='Giao thức 2', bg="#696969", fg="#e6e6fa", font=("Time New Roman", 18), command=GT2)
+btnCon2=Button(window, text='Giao thức 2', bg="#696969", fg="#e6e6fa", font=("Time New Roman", 18), command=GT2)
 btnCon2.place(x=180, y=168)
 
 window.mainloop()

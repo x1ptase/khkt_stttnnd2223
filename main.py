@@ -91,8 +91,8 @@ def norm_train2d(p):
     return p
 
 
-# display
-window = Tk()
+# FRONTEND
+window=Tk()
 window.title("Vietnamese Sign Language Interpreter")
 window.geometry("1020x600")
 # window.attributes("-topmost", True)
@@ -210,8 +210,8 @@ def GT1():
 
             if len(sequence) == 120:
                 # print(sequence)
-                X_test_rt_1, X_test_rt_2 = data_generator_rt(sequence[-100:], C)
-                res = DD_Net.predict([X_test_rt_1, X_test_rt_2])[0]
+                X_test_rt_1, X_test_rt_2=data_generator_rt(sequence[-100:], C)
+                res=DD_Net.predict([X_test_rt_1, X_test_rt_2])[0]
 
                 # print(labels[np.argmax(res)])
                 # print(np.argmax[res])

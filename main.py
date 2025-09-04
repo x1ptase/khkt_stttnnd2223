@@ -176,24 +176,23 @@ def GT1():
     default_speaker=sc.default_speaker()
     
     # ACCESS WEBCAM OPENCV
-    cap = cv2.VideoCapture(0)
-
+    cap=cv2.VideoCapture(0)
     with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
         while cap.isOpened():
-            success, image = cap.read()
+            success, image=cap.read()
 
-            # Flip the image horizontally for a selfie-view display.
-            image = cv2.flip(image, 1)
+            # FLIP THE IMG HORIZONTALLY FOR A SELFIE-VIEW DISPLAY
+            image=cv2.flip(image, 1)
 
             # To improve performance, optionally mark the image as not writeable to
             # pass by reference.
             image.flags.writeable = False
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            results = pose.process(image)
+            image=cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            results=pose.process(image)
 
-            # Draw the pose annotation on the image.
-            image.flags.writeable = True
-            image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+            # DRAW THE POSE ANNOTATION ON THE IMG
+            image.flags.writeable=True
+            image=cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
             mp_drawing.draw_landmarks(
                 image,
                 results.pose_landmarks,
@@ -202,12 +201,12 @@ def GT1():
             )
 
             if results.pose_landmarks:
-                keypoint = np.array([[res.x, res.y] for res in results.pose_landmarks.landmark]).flatten()
-                keypoint = np.array_split(keypoint, 33)
+                keypoint=np.array([[res.x, res.y] for res in results.pose_landmarks.landmark]).flatten()
+                keypoint=np.array_split(keypoint, 33)
                 # print(keypoint)
                 sequence.append(keypoint)
                 # print(sequence)
-                sequence = sequence[-120:]
+                sequence=sequence[-120:]
 
             if len(sequence) == 120:
                 # print(sequence)
@@ -217,25 +216,25 @@ def GT1():
                 # print(labels[np.argmax(res)])
                 # print(np.argmax[res])
 
-                #  MEDIA
+                # MEDIA
                 if np.argmax(res) == 0:
-                    samples1, samplerate1 = sf.read("D:\GIT\khkt_stttnnd2223\media\output1.wav")
+                    samples1, samplerate1=sf.read("D:\GIT\khkt_stttnnd2223\media\output1.wav")
                     default_speaker.play(samples1, samplerate=samplerate1)  # tỉ lệ mẫu1
 
                 if np.argmax(res) == 2:
-                    samples2, samplerate2 = sf.read("D:\GIT\khkt_stttnnd2223\media\output2.wav")
+                    samples2, samplerate2=sf.read("D:\GIT\khkt_stttnnd2223\media\output2.wav")
                     default_speaker.play(samples2, samplerate=samplerate2)  # tỉ lệ mẫu2
 
                 if np.argmax(res) == 4:
-                    samples4, samplerate4 = sf.read("D:\GIT\khkt_stttnnd2223\media\output4.wav")
+                    samples4, samplerate4=sf.read("D:\GIT\khkt_stttnnd2223\media\output4.wav")
                     default_speaker.play(samples4, samplerate=samplerate4)  # tỉ lệ mẫu4
 
                 if np.argmax(res) == 5:
-                    samples5, samplerate5 = sf.read("D:\GIT\khkt_stttnnd2223\media\output5.wav")
+                    samples5, samplerate5=sf.read("D:\GIT\khkt_stttnnd2223\media\output5.wav")
                     default_speaker.play(samples5, samplerate=samplerate5)  # tỉ lệ mẫu5
 
                 if np.argmax(res) == 9:
-                    samples6, samplerate6 = sf.read("D:\GIT\khkt_stttnnd2223\media\output6.wav")
+                    samples6, samplerate6=sf.read("D:\GIT\khkt_stttnnd2223\media\output6.wav")
                     default_speaker.play(samples6, samplerate=samplerate6)  # tỉ lệ mẫu9
 
                 sentence.append(labels[np.argmax(res)])
@@ -262,23 +261,22 @@ def GT1():
 
 
 def GT2():
-    lbl = Label(window, text="",
+    lbl=Label(window, text="",
                 fg="white",
                 bg="#4682b4",
                 font=("Time New Roman", 30))
     lbl.place(x=200, y=300)
 
-    t2t = Entry(window, width=40)
+    t2t=Entry(window, width=40)
     t2t.place(x=500, y=66)
 
     def handleButtonCon():
         lbl.configure(text="" + t2t.get())      # configure: cau hinh
         return
 
-    btnCon = Button(window, text='Hoạt động', bg="#696969", fg="#e6e6fa", font=("Time New Roman", 12),
+    btnCon=Button(window, text='Hoạt động', bg="#696969", fg="#e6e6fa", font=("Time New Roman", 12),
                     command=handleButtonCon)
     btnCon.place(x=750, y=60)
-
     return
 
 

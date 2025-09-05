@@ -53,13 +53,13 @@ def zoom(p, target_l=32, joints_num=20, joints_dim=3):
 def sampling_frame(p, C):
     full_l=p.shape[0]    #  FULL LENGTH
 
-    if random.uniform(0, 1) < 0.5:  # aligment sampling
+    if random.uniform(0, 1) < 0.5:    #  ALIGMENT SAMPLING
         valid_l=np.round(np.random.uniform(0.9, 1) * full_l)
         s=random.randint(0, full_l - int(valid_l))
-        e=s + valid_l  # sample end point
+        e=s + valid_l    #  SAMPLE END POINT
         p=p[int(s) : int(e), :, :]
 
-    else:  # without aligment sampling
+    else:    #  WITHOUT ALIGMENT SAMPLING
         valid_l=np.round(np.random.uniform(0.9, 1) * full_l)
         index=np.sort(np.random.choice(range(0, full_l), int(valid_l), replace=False))
         p=p[index, :, :]
@@ -84,7 +84,7 @@ def get_CG(p, C):
 
 
 def norm_train(p):
-    # normalize to start point use the center for hand case
+    #  NORMALIZE TO START POINT USE THE CENTER FOR HAND CASE
     p[:, :, 0]=p[:, :, 0] - np.mean(p[:, :, 0])
     p[:, :, 1]=p[:, :, 1] - np.mean(p[:, :, 1])
     p[:, :, 2]=p[:, :, 2] - np.mean(p[:, :, 2])
@@ -168,7 +168,7 @@ def GT1():
 
     colors=[(245, 117, 16), (117, 245, 16), (16, 117, 245)]
 
-    # define mediapipe solutions
+    #  DEFINE MEDIAPIPE SOLUTIONS
     mp_drawing=mp.solutions.drawing_utils
     mp_drawing_styles=mp.solutions.drawing_styles
     mp_pose=mp.solutions.pose
@@ -190,12 +190,12 @@ def GT1():
             #  FLIP THE IMG HORIZONTALLY FOR A SELFIE-VIEW DISPLAY
             image=cv2.flip(image, 1)
 
-            #  To improve performance, optionally mark the image as not writeable to pass by reference
+            #  TO IMPROVE PERFORMANCE, OPTIONALLY MARK THE IMG AS NOT WRITEABLE TO PASS BY REFERENCE
             image.flags.writeable = False
             image=cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             results=pose.process(image)
 
-            # DRAW THE POSE ANNOTATION ON THE IMG
+            #  DRAW THE POSE ANNOTATION ON THE IMG
             image.flags.writeable=True
             image=cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
             mp_drawing.draw_landmarks(
@@ -221,7 +221,7 @@ def GT1():
                 # print(labels[np.argmax(res)])
                 # print(np.argmax[res])
 
-                # MEDIA
+                #  MEDIA
                 if np.argmax(res) == 0:
                     samples1, samplerate1=sf.read("D:\GIT\khkt_stttnnd2223\media\output1.wav")
                     default_speaker.play(samples1, samplerate=samplerate1)  # tỉ lệ mẫu1
@@ -246,7 +246,7 @@ def GT1():
                 sequence.clear()
                 print(sentence)
 
-            # SHOW FPS
+            #  SHOW FPS
             time1=time.time()
             fps=1/(time1-time0)
             time0=time1

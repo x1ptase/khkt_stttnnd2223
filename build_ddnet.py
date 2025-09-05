@@ -13,19 +13,19 @@ from tensorflow.keras.callbacks import *
 from keras.layers.convolutional import *
 import tensorflow as tf
 
-# INITIALIZE THE SETTING
+#  INITIALIZE THE SETTING
 random.seed(1234)
 
 class Config():
     def __init__(self):
-        self.frame_l=30  # THE LENGTH OF FRAMES
-        self.joint_n=33  # THE NUMBER OF JOINTS
-        self.joint_d=2  # THE DIMENSION OF JOINS
-        self.clc_num=10  # THE NUMBER OF CLASS
+        self.frame_l=30    #  THE LENGTH OF FRAMES
+        self.joint_n=33    #  THE NUMBER OF JOINTS
+        self.joint_d=2    #  THE DIMENSION OF JOINS
+        self.clc_num=10    #  THE NUMBER OF CLASS
         self.filters=64
 
 
-# TEMPLE RESIZING FUNCTION
+#  TEMPLE RESIZING FUNCTION
 def zoom(p, target_l=64, joints_num=33, joints_dim=2):
     l=p.shape[0]
     p_new=np.empty([target_l, joints_num, joints_dim])
@@ -36,7 +36,7 @@ def zoom(p, target_l=64, joints_num=33, joints_dim=2):
     return p_new
 
 
-# CALCULATE JCD FEATURE
+#  CALCULATE JCD FEATURE
 def norm_scale(x):
     return (x - np.mean(x)) / np.mean(x)
 
@@ -52,7 +52,7 @@ def get_CG(p, C):
     return M
 
 
-# GENRATE DATASET
+#  GENRATE DATASET
 def data_generator(T, C, le):
     X_0=[]
     X_1=[]
@@ -76,7 +76,7 @@ def data_generator(T, C, le):
     return X_0, X_1, Y
 
 
-# BUILDING THE MODEL
+#  BUILDING THE MODEL
 def poses_diff(x):
     H, W=x.get_shape()[1], x.get_shape()[2]
     x=tf.subtract(x[:, 1:, ...], x[:, :-1, ...])
@@ -168,12 +168,12 @@ def build_DD_Net(C):
     x=Dropout(0.5)(x)
     x=Dense(C.clc_num, activation='softmax')(x)
 
-    # SELF-SUPERVISED PART
+    #  SELF-SUPERVISED PART
     model=Model(inputs=[M, P], outputs=x)
     return model
 
 
-# TEST IN REAL TIME
+#  TEST IN REAL TIME
 def data_generator_rt(T, C):
     X_0=[]
     X_1=[]

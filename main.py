@@ -1,12 +1,12 @@
 import random
-import time  # tinker python
-from tkinter import *
+import time 
+from tkinter import *    #  TINKER PY
 
-import soundfile as sf  # audio
-import soundcard as sc  # audio
+import soundfile as sf    #  LIB FILE AUDIO
+import soundcard as sc    #  LIB CARD AUDIO
 
-import cv2  # lib computer vision
-import mediapipe as mp  # setup camera
+import cv2  # LIB OPENCV
+import mediapipe as mp    #  SETUP CAM
 import numpy as np
 
 import scipy.ndimage.interpolation as inter
@@ -15,7 +15,7 @@ from scipy.signal import medfilt
 from scipy.spatial.distance import cdist
 from tqdm import tqdm
 
-import build_ddnet as ddnet  # build train model
+import build_ddnet as ddnet    #  BUILD TRAIN MODEL
 
 def data_generator_rt(T, C):
     X_0=[]
@@ -39,7 +39,7 @@ def data_generator_rt(T, C):
     return X_0, X_1
 
 
-# Calculate features
+#  CACULATE FEATURES
 def zoom(p, target_l=32, joints_num=20, joints_dim=3):
     l=p.shape[0]
     p_new=np.empty([target_l, joints_num, joints_dim])
@@ -51,16 +51,19 @@ def zoom(p, target_l=32, joints_num=20, joints_dim=3):
 
 
 def sampling_frame(p, C):
-    full_l=p.shape[0]  # full length
+    full_l=p.shape[0]    #  FULL LENGTH
+
     if random.uniform(0, 1) < 0.5:  # aligment sampling
         valid_l=np.round(np.random.uniform(0.9, 1) * full_l)
         s=random.randint(0, full_l - int(valid_l))
         e=s + valid_l  # sample end point
         p=p[int(s) : int(e), :, :]
+
     else:  # without aligment sampling
         valid_l=np.round(np.random.uniform(0.9, 1) * full_l)
         index=np.sort(np.random.choice(range(0, full_l), int(valid_l), replace=False))
         p=p[index, :, :]
+
     p=zoom(p, C.frame_l, C.joint_n, C.joint_d)
     return p
 
@@ -69,10 +72,13 @@ def get_CG(p, C):
     M=[]
     iu=np.triu_indices(C.joint_n, 1, C.joint_n)
     for f in range(C.frame_l):
-        # distance max
+        
+        #  DISTANCE MAX
         d_m=cdist(p[f], np.concatenate([p[f], np.zeros([1, C.joint_d])]), 'euclidean')
         d_m=d_m[iu]
+
         M.append(d_m)
+
     M=np.stack(M)
     return M
 
@@ -150,13 +156,13 @@ label_text7.place(x=0, y=420)
 
 
 def GT1():
-    # BUILD DD-NET MODEL
+    #  BUILD DD-NET MODEL
     C=ddnet.Config()
     DD_Net=ddnet.build_DD_Net(C)
     DD_Net.summary()
     DD_Net.load_weights('pta-lkn.h5')
 
-    # 10 CLASSES - 5 REAL [1, 3, 5, 6, 10] 
+    #  10 CLASSES - 5 REAL [1, 3, 5, 6, 10] 
     labels=['xin chao rat vui duoc gap ban', '', 'xin cam on ban that tot bung', '', 'xin chao rat vui duoc gap ban',
               'toi la nguoi diec', '', '', '', 'toi la nguoi diec']
 
@@ -175,17 +181,16 @@ def GT1():
 
     default_speaker=sc.default_speaker()
     
-    # ACCESS WEBCAM OPENCV
+    #  ACCESS WEBCAM OPENCV
     cap=cv2.VideoCapture(0)
     with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
         while cap.isOpened():
             success, image=cap.read()
 
-            # FLIP THE IMG HORIZONTALLY FOR A SELFIE-VIEW DISPLAY
+            #  FLIP THE IMG HORIZONTALLY FOR A SELFIE-VIEW DISPLAY
             image=cv2.flip(image, 1)
 
-            # To improve performance, optionally mark the image as not writeable to
-            # pass by reference.
+            #  To improve performance, optionally mark the image as not writeable to pass by reference
             image.flags.writeable = False
             image=cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             results=pose.process(image)

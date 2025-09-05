@@ -13,76 +13,74 @@ from tensorflow.keras.callbacks import *
 from keras.layers.convolutional import *
 import tensorflow as tf
 
-# Initialize the setting
+# INITIALIZE THE SETTING
 random.seed(1234)
 
 class Config():
     def __init__(self):
-        self.frame_l = 30  # the length of frames
-        self.joint_n = 33  # the number of joints
-        self.joint_d = 2  # the dimension of joints
-        self.clc_num = 10  # the number of class
-        self.feat_d = 528
-        self.filters = 64
+        self.frame_l=30  # THE LENGTH OF FRAMES
+        self.joint_n=33  # THE NUMBER OF JOINTS
+        self.joint_d=2  # THE DIMENSION OF JOINS
+        self.clc_num=10  # THE NUMBER OF CLASS
+        self.filters=64
 
 
-# Temple resizing function
+# TEMPLE RESIZING FUNCTION
 def zoom(p, target_l=64, joints_num=33, joints_dim=2):
-    l = p.shape[0]
-    p_new = np.empty([target_l, joints_num, joints_dim])
+    l=p.shape[0]
+    p_new=np.empty([target_l, joints_num, joints_dim])
     for m in range(joints_num):
         for n in range(joints_dim):
-            p[:, m, n] = medfilt(p[:, m, n], 3)
-            p_new[:, m, n] = inter.zoom(p[:, m, n], target_l / l)[:target_l]
+            p[:, m, n]=medfilt(p[:, m, n], 3)
+            p_new[:, m, n]=inter.zoom(p[:, m, n], target_l / l)[:target_l]
     return p_new
 
 
-# Calculate JCD feature
+# CALCULATE JCD FEATURE
 def norm_scale(x):
     return (x - np.mean(x)) / np.mean(x)
 
-
 def get_CG(p, C):
-    M = []
-    iu = np.triu_indices(C.joint_n, 1, C.joint_n)
+    M=[]
+    iu=np.triu_indices(C.joint_n, 1, C.joint_n)
     for f in range(C.frame_l):
-        d_m = cdist(p[f], p[f], 'euclidean')
-        d_m = d_m[iu]
+        d_m=cdist(p[f], p[f], 'euclidean')
+        d_m=d_m[iu]
         M.append(d_m)
-    M = np.stack(M)
-    M = norm_scale(M)
+    M=np.stack(M)
+    M=norm_scale(M)
     return M
 
 
-# Genrate dataset
+# GENRATE DATASET
 def data_generator(T, C, le):
-    X_0 = []
-    X_1 = []
-    Y = []
+    X_0=[]
+    X_1=[]
+    Y=[]
     for i in tqdm(range(len(T['pose']))):
-        p = np.copy(T['pose'][i])
-        p = zoom(p, target_l=C.frame_l, joints_num=C.joint_n, joints_dim=C.joint_d)
+        p=np.copy(T['pose'][i])
+        p=zoom(p, target_l=C.frame_l, joints_num=C.joint_n, joints_dim=C.joint_d)
 
-        label = np.zeros(C.clc_num)
-        label[le.transform(T['label'])[i] - 1] = 1
+        label=np.zeros(C.clc_num)
+        label[le.transform(T['label'])[i] - 1]=1
 
-        M = get_CG(p, C)
+        M=get_CG(p, C)
 
         X_0.append(M)
         X_1.append(p)
         Y.append(label)
 
-    X_0 = np.stack(X_0)
-    X_1 = np.stack(X_1)
-    Y = np.stack(Y)
+    X_0=np.stack(X_0)
+    X_1=np.stack(X_1)
+    Y=np.stack(Y)
     return X_0, X_1, Y
 
 
-# Building the model
+# BUILDING THE MODEL
 def poses_diff(x):
-    H, W = x.get_shape()[1], x.get_shape()[2]
-    x = tf.subtract(x[:, 1:, ...], x[:, :-1, ...])
-    x = tf.image.resize(x, size=[H, W])
+    H, W=x.get_shape()[1], x.get_shape()[2]
+    x=tf.subtract(x[:, 1:, ...], x[:, :-1, ...])
+    x=tf.image.resize(x, size=[H, W])
     return x
 
 
@@ -180,22 +178,22 @@ def build_DD_Net(C):
     return model
 
 
-# Test in real time
+# TEST IN REAL TIME
 def data_generator_rt(T, C):
-    X_0 = []
-    X_1 = []
+    X_0=[]
+    X_1=[]
 
-    T = np.expand_dims(T, axis=0)
+    T=np.expand_dims(T, axis=0)
     for i in tqdm(range(len(T))):
-        p = np.copy(T[i])
-        p = zoom(p, target_l=C.frame_l, joints_num=C.joint_n, joints_dim=C.joint_d)
+        p=np.copy(T[i])
+        p=zoom(p, target_l=C.frame_l, joints_num=C.joint_n, joints_dim=C.joint_d)
 
-        M = get_CG(p, C)
+        M=get_CG(p, C)
 
         X_0.append(M)
         X_1.append(p)
 
-    X_0 = np.stack(X_0)
-    X_1 = np.stack(X_1)
-
+    X_0=np.stack(X_0)
+    X_1=np.stack(X_1)
+    
     return X_0, X_1

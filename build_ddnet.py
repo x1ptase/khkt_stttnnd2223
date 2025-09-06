@@ -40,6 +40,7 @@ def zoom(p, target_l=64, joints_num=33, joints_dim=2):
 def norm_scale(x):
     return (x - np.mean(x)) / np.mean(x)
 
+
 def get_CG(p, C):
     M=[]
     iu=np.triu_indices(C.joint_n, 1, C.joint_n)

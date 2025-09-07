@@ -44,10 +44,12 @@ def norm_scale(x):
 def get_CG(p, C):
     M=[]
     iu=np.triu_indices(C.joint_n, 1, C.joint_n)
+    
     for f in range(C.frame_l):
         d_m=cdist(p[f], p[f], 'euclidean')
         d_m=d_m[iu]
         M.append(d_m)
+
     M=np.stack(M)
     M=norm_scale(M)
     return M
@@ -160,7 +162,6 @@ def build_DD_Net(C):
     FM=build_FM(C.frame_l, C.joint_n, C.joint_d, C.feat_d, C.filters)
 
     x=FM([M, P])
-
     x=GlobalMaxPool1D()(x)
 
     x=d1D(x, 128)

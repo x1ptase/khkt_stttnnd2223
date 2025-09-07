@@ -84,7 +84,7 @@ def get_CG(p, C):
 
 
 def norm_train(p):
-    #  NORMALIZE TO START POINT USE THE CENTER FOR HAND CASE
+    #  sNORMALIZE TO START POINT USE THE CENTER FOR HAND CASE
     p[:, :, 0]=p[:, :, 0] - np.mean(p[:, :, 0])
     p[:, :, 1]=p[:, :, 1] - np.mean(p[:, :, 1])
     p[:, :, 2]=p[:, :, 2] - np.mean(p[:, :, 2])
@@ -97,7 +97,7 @@ def norm_train2d(p):
     return p
 
 
-# FRONTEND
+#  FRONTEND
 window=Tk()
 window.title("Vietnamese Sign Language Interpreter")
 window.geometry("1020x600")
@@ -224,23 +224,23 @@ def GT1():
                 #  MEDIA
                 if np.argmax(res) == 0:
                     samples1, samplerate1=sf.read("D:\GIT\khkt_stttnnd2223\media\output1.wav")
-                    default_speaker.play(samples1, samplerate=samplerate1)  # tỉ lệ mẫu1
+                    default_speaker.play(samples1, samplerate=samplerate1)  #  M1
 
                 if np.argmax(res) == 2:
                     samples2, samplerate2=sf.read("D:\GIT\khkt_stttnnd2223\media\output2.wav")
-                    default_speaker.play(samples2, samplerate=samplerate2)  # tỉ lệ mẫu2
+                    default_speaker.play(samples2, samplerate=samplerate2)  #  M2
 
                 if np.argmax(res) == 4:
                     samples4, samplerate4=sf.read("D:\GIT\khkt_stttnnd2223\media\output4.wav")
-                    default_speaker.play(samples4, samplerate=samplerate4)  # tỉ lệ mẫu4
+                    default_speaker.play(samples4, samplerate=samplerate4)  #  M4
 
                 if np.argmax(res) == 5:
                     samples5, samplerate5=sf.read("D:\GIT\khkt_stttnnd2223\media\output5.wav")
-                    default_speaker.play(samples5, samplerate=samplerate5)  # tỉ lệ mẫu5
+                    default_speaker.play(samples5, samplerate=samplerate5)  #  M5
 
                 if np.argmax(res) == 9:
                     samples6, samplerate6=sf.read("D:\GIT\khkt_stttnnd2223\media\output6.wav")
-                    default_speaker.play(samples6, samplerate=samplerate6)  # tỉ lệ mẫu9
+                    default_speaker.play(samples6, samplerate=samplerate6)  #  M9
 
                 sentence.append(labels[np.argmax(res)])
                 sequence.clear()
@@ -266,17 +266,17 @@ def GT1():
 
 
 def GT2():
-    lbl=Label(window, text="",
+    label_text=Label(window, text="",
                 fg="white",
                 bg="#4682b4",
                 font=("Time New Roman", 30))
-    lbl.place(x=200, y=300)
+    label_text.place(x=200, y=300)
 
     t2t=Entry(window, width=40)
     t2t.place(x=500, y=66)
 
     def handleButtonCon():
-        lbl.configure(text="" + t2t.get())      # configure: cau hinh
+        label_text.configure(text="" + t2t.get())
         return
 
     btnCon=Button(window, text='Hoạt động', bg="#696969", fg="#e6e6fa", font=("Time New Roman", 12),

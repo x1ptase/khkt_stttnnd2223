@@ -266,10 +266,7 @@ def GT1():
 
 
 def GT2():
-    label_text=Label(window, text="",
-                fg="white",
-                bg="#4682b4",
-                font=("Time New Roman", 30))
+    label_text=Label(window, text="", fg="white", bg="#4682b4", font=("Time New Roman", 30))
     label_text.place(x=200, y=300)
 
     t2t=Entry(window, width=40)

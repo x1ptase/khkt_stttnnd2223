@@ -76,7 +76,7 @@ def get_CG(p, C):
     for f in range(C.frame_l):
         
         #  DISTANCE MAX
-        d_m=cdist(p[f], np.concatenate([p[f], np.zeros([1, C.joint_d])]), 'euclidean')
+        d_m=cdist(p[f], np.concatenate([p[f], np.zeros([1, C.joint_d])]), "euclidean")
         d_m=d_m[iu]
 
         M.append(d_m)
@@ -104,7 +104,7 @@ window=Tk()
 window.title("Vietnamese Sign Language Interpreter")
 window.geometry("1020x600")
 # window.attributes("-topmost", True)
-window['bg']='#e0ffff'
+window["bg"]="#e0ffff"
 
 label_text=Label(window,
                    text="  Phiên dịch ngôn ngữ kí hiệu                                                                ",
@@ -162,11 +162,11 @@ def GT1():
     C=ddnet.Config()
     DD_Net=ddnet.build_DD_Net(C)
     DD_Net.summary()
-    DD_Net.load_weights('pta-lkn.h5')
+    DD_Net.load_weights("pta-lkn.h5")
 
     #  10 CLASSES - 5 REAL [1, 3, 5, 6, 10] 
-    labels=['xin chao rat vui duoc gap ban', '', 'xin cam on ban that tot bung', '', 'xin chao rat vui duoc gap ban',
-              'toi la nguoi diec', '', '', '', 'toi la nguoi diec']
+    labels=["xin chao rat vui duoc gap ban", "", "xin cam on ban that tot bung", "", "xin chao rat vui duoc gap ban",
+              "toi la nguoi diec", "", "", "", "toi la nguoi diec"]
 
     #  COLOR TEXT
     colors=[(245, 117, 16), (117, 245, 16), (16, 117, 245)]
@@ -254,7 +254,7 @@ def GT1():
             fps=1/(time1-time0)
             time0=time1
 
-            cv2.putText(image, 'FPS:' + str(int(fps)), (3, 475), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+            cv2.putText(image, "FPS:" + str(int(fps)), (3, 475), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
             cv2.rectangle(image, (0, 0), (640, 40), (245, 117, 16), -1)
             cv2.putText(image, ''.join(sentence[-1:]), (3, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
             cv2.imshow('Vietnamese Sign Language', image)
@@ -284,10 +284,10 @@ def GT2():
     return
 
 
-btnCon1=Button(window, text='Giao thức 1', bg="#696969", fg="#e6e6fa", font=("Time New Roman", 18), command=GT1)
+btnCon1=Button(window, text="Model 1", bg="#696969", fg="#e6e6fa", font=("Time New Roman", 18), command=GT1)
 btnCon1.place(x=10, y=168)
 
-btnCon2=Button(window, text='Giao thức 2', bg="#696969", fg="#e6e6fa", font=("Time New Roman", 18), command=GT2)
+btnCon2=Button(window, text="Model 2", bg="#696969", fg="#e6e6fa", font=("Time New Roman", 18), command=GT2)
 btnCon2.place(x=180, y=168)
 
 window.mainloop()

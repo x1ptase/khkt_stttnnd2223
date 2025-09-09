@@ -48,7 +48,7 @@ def get_CG(p, C):
     iu=np.triu_indices(C.joint_n, 1, C.joint_n)
     
     for f in range(C.frame_l):
-        d_m=cdist(p[f], p[f], 'euclidean')
+        d_m=cdist(p[f], p[f], "euclidean")
         d_m=d_m[iu]
         M.append(d_m)
 
@@ -62,13 +62,13 @@ def data_generator(T, C, le):
     X_0=[]
     X_1=[]
     Y=[]
-    
-    for i in tqdm(range(len(T['pose']))):
-        p=np.copy(T['pose'][i])
+
+    for i in tqdm(range(len(T["pose"]))):
+        p=np.copy(T["pose"][i])
         p=zoom(p, target_l=C.frame_l, joints_num=C.joint_n, joints_dim=C.joint_d)
 
         label=np.zeros(C.clc_num)
-        label[le.transform(T['label'])[i] - 1]=1
+        label[le.transform(T["label"])[i] - 1]=1
 
         M=get_CG(p, C)
 
@@ -98,7 +98,7 @@ def pose_motion(P, frame_l):
     return P_diff_slow, P_diff_fast
 
 def c1D(x, filters, kernel):
-    x=Conv1D(filters, kernel_size=kernel, padding='same', use_bias=False)(x)
+    x=Conv1D(filters, kernel_size=kernel, padding="same", use_bias=False)(x)
     x=BatchNormalization()(x)
     x=LeakyReLU(alpha=0.2)(x)
     return x
@@ -171,7 +171,7 @@ def build_DD_Net(C):
     x=Dropout(0.5)(x)
     x=d1D(x, 128)
     x=Dropout(0.5)(x)
-    x=Dense(C.clc_num, activation='softmax')(x)
+    x=Dense(C.clc_num, activation="softmax")(x)
 
     #  SELF-SUPERVISED PART
     model=Model(inputs=[M, P], outputs=x)

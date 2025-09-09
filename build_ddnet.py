@@ -29,10 +29,12 @@ class Config():
 def zoom(p, target_l=64, joints_num=33, joints_dim=2):
     l=p.shape[0]
     p_new=np.empty([target_l, joints_num, joints_dim])
+
     for m in range(joints_num):
         for n in range(joints_dim):
             p[:, m, n]=medfilt(p[:, m, n], 3)
             p_new[:, m, n]=inter.zoom(p[:, m, n], target_l / l)[:target_l]
+
     return p_new
 
 
@@ -60,6 +62,7 @@ def data_generator(T, C, le):
     X_0=[]
     X_1=[]
     Y=[]
+    
     for i in tqdm(range(len(T['pose']))):
         p=np.copy(T['pose'][i])
         p=zoom(p, target_l=C.frame_l, joints_num=C.joint_n, joints_dim=C.joint_d)

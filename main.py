@@ -5,11 +5,11 @@ from tkinter import *    #  TINKER PY
 import soundfile as sf    #  LIB FILE AUDIO
 import soundcard as sc    #  LIB CARD AUDIO
 
-import cv2  # LIB OPENCV
+import cv2    # LIB OPENCV
 import mediapipe as mp    #  SETUP CAM
 import numpy as np
 
-import scipy.ndimage.interpolation as inter
+import scipy.ndimage.interpolation as inter 
 from pyparsing import results
 from scipy.signal import medfilt
 from scipy.spatial.distance import cdist
@@ -43,10 +43,12 @@ def data_generator_rt(T, C):
 def zoom(p, target_l=32, joints_num=20, joints_dim=3):
     l=p.shape[0]
     p_new=np.empty([target_l, joints_num, joints_dim])
+
     for m in range(joints_num):
         for n in range(joints_dim):
             p[:, m, n]=medfilt(p[:, m, n], 3)
             p_new[:, m, n]=inter.zoom(p[:, m, n], target_l / l)[:target_l]
+
     return p_new
 
 
@@ -166,6 +168,7 @@ def GT1():
     labels=['xin chao rat vui duoc gap ban', '', 'xin cam on ban that tot bung', '', 'xin chao rat vui duoc gap ban',
               'toi la nguoi diec', '', '', '', 'toi la nguoi diec']
 
+    #  COLOR TEXT
     colors=[(245, 117, 16), (117, 245, 16), (16, 117, 245)]
 
     #  DEFINE MEDIAPIPE SOLUTIONS
@@ -251,15 +254,14 @@ def GT1():
             fps=1/(time1-time0)
             time0=time1
 
-            cv2.putText(image, 'FPS:' + str(int(fps)), (3, 475), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2,
-                        cv2.LINE_AA)
+            cv2.putText(image, 'FPS:' + str(int(fps)), (3, 475), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
             cv2.rectangle(image, (0, 0), (640, 40), (245, 117, 16), -1)
-            cv2.putText(image, ''.join(sentence[-1:]), (3, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2,
-                        cv2.LINE_AA)
+            cv2.putText(image, ''.join(sentence[-1:]), (3, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
             cv2.imshow('Vietnamese Sign Language', image)
 
             if cv2.waitKey(5) & 0xFF == ord('q'):
                 break
+
     cap.release()
     cv2.destroyAllWindows()
     return
